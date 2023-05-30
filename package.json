@@ -1,0 +1,45 @@
+{
+  "name": "commitizen-cli",
+  "version": "1.0.0",
+  "description": "Command-line interface tool that helps enforce standardized commit message formats in Git repositories.",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "commitizen-cli": "./dist/cli.mjs",
+    "cc": "./dist/cli.mjs"
+  },
+  "author": {
+    "name": "iamando",
+    "email": "iamando@tuta.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamando/commitizen-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamando/commitizen-cli/issues"
+  },
+  "homepage": "https://github.com/iamando/commitizen-cli#readme",
+  "keywords": [
+    "commitizen-cli",
+    "javascript",
+    "typescript",
+    "git-commit",
+    "git",
+    "commit",
+    "cli",
+    "command-line"
+  ],
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=14.14"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
