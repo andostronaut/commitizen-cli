@@ -36,11 +36,11 @@
   "engines": {
     "node": ">=14.14"
   },
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
-    "start": "jiti ./src/cli.ts"
+    "start": "jiti ./src/cli.ts",
+    "typecheck": "tsc",
+    "lint": "prettier --check . && eslint",
+    "lint:fix": "prettier --write . && eslint --fix"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",
