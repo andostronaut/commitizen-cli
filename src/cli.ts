@@ -1,8 +1,11 @@
 import { cli } from 'cleye'
 
+import { PACKAGE_NAME, VERSION } from './utils/constants'
+
 cli(
   {
-    version: '1.0.0',
+    name: PACKAGE_NAME,
+    version: VERSION,
     commands: [],
   },
   argv => {
