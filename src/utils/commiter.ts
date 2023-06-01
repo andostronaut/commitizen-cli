@@ -1,40 +1,16 @@
-import { select, cancel, intro, group } from '@clack/prompts'
+import { cancel, intro, group } from '@clack/prompts'
 import { lightYellow } from 'kolorist'
 
 import { CANCELED_OP_MSG } from './constants'
+import { type, message } from './prompts'
 
 export const commiter = async () => {
   intro(lightYellow('Commitizen CLI'))
 
-  const type = select({
-    message: 'Choose commit type',
-    options: [
-      {
-        label: 'Feature',
-        value: 'feature',
-      },
-      {
-        label: 'Bug',
-        value: 'bug',
-      },
-      {
-        label: 'Chore',
-        value: 'chore',
-      },
-      {
-        label: 'Design',
-        value: 'design',
-      },
-      {
-        label: 'Experimental',
-        value: 'experimental',
-      },
-    ],
-  })
-
   const values = await group(
     {
-      type: () => type,
+      type: () => type(),
+      message: () => message(),
     },
     {
       onCancel: () => {
@@ -45,4 +21,5 @@ export const commiter = async () => {
   )
 
   console.log(values.type)
+  console.log(values.message)
 }
