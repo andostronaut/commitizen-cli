@@ -2,6 +2,7 @@ import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
 import { cancel, intro, group, confirm, outro } from '@clack/prompts'
 import { lightYellow } from 'kolorist'
+import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
 import { type, message } from './prompts'
@@ -52,7 +53,11 @@ export const commiter = async () => {
 
         if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
 
-        outro("You're all set!")
+        outro(dedent`
+        You're all set 🎉
+
+        use "git push" to publish your local commits
+      `)
       }
 
       return
@@ -62,7 +67,11 @@ export const commiter = async () => {
 
     if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
 
-    outro("You're all set!")
+    outro(dedent`
+    You're all set 🎉
+
+    use "git push" to publish your local commits
+  `)
   } catch (err: any) {
     log({ type: 'error', msg: err.message })
     handleCliError(err)
