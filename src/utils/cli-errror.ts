@@ -25,7 +25,7 @@ export const handleCliError = (error: any) => {
     })
     log({
       type: 'error',
-      msg: `${indent}https://github.com/${AUTHOR}/${PACKAGE_NAME}/issues/new`,
+      msg: `${indent}https://github.com/${AUTHOR.name}/${PACKAGE_NAME}/issues/new`,
     })
   }
 }
