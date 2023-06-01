@@ -1,7 +1,7 @@
 import { dim } from 'kolorist'
 
 import { AUTHOR, PACKAGE_NAME, VERSION } from './constants'
-import log from './log'
+import { log } from './log'
 
 export class CliError extends Error {}
 

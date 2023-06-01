@@ -2,7 +2,7 @@ import { blue, green, red, dim } from 'kolorist'
 
 type Type = 'info' | 'success' | 'error'
 
-const log = ({
+export const log = ({
   type,
   msg,
   isConsole = true,
@@ -32,5 +32,3 @@ const log = ({
         : `${newLine ? '\n' : ''} ${dim('❕')} ${msg}`
   }
 }
-
-export default log
