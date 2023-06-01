@@ -1,6 +1,6 @@
 import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
-import { cancel, intro, group, confirm } from '@clack/prompts'
+import { cancel, intro, group, confirm, outro } from '@clack/prompts'
 import { lightYellow } from 'kolorist'
 
 import { CANCELED_OP_MSG } from './constants'
@@ -44,19 +44,25 @@ export const commiter = async () => {
       })
 
       if (addStagedFiles) {
-        const { stdout: stdoutAdd, stderr: stderrAdd } = await execa(
-          'git add .'
-        )
+        const { stderr: stderrAdd } = await execa('git add .')
 
         if (stderrAdd) throw new CliError(`An error occured: ${stderrAdd}`)
+
+        const { stderr: stderrCmd } = await execa(cmd)
+
+        if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
+
+        outro("You're all set!")
       }
 
       return
     }
 
-    const { stdout, stderr } = await execa(cmd)
+    const { stderr } = await execa(cmd)
 
     if (stderr) throw new CliError(`An error occured: ${stderr}`)
+
+    outro("You're all set!")
   } catch (err: any) {
     log({ type: 'error', msg: err.message })
     handleCliError(err)
