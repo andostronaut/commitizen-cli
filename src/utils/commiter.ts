@@ -1,6 +1,6 @@
 import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
-import { cancel, intro, group } from '@clack/prompts'
+import { cancel, intro, group, confirm, outro } from '@clack/prompts'
 import { lightYellow } from 'kolorist'
 
 import { CANCELED_OP_MSG } from './constants'
@@ -28,13 +28,41 @@ export const commiter = async () => {
 
   try {
     const commit = `${values.type}: ${values.message}`
-    const cmd = `git commit -m ${commit}`
-    const { stdout, stderr } = await execa(cmd)
+    const cmd = `git commit -m "${commit}"`
+
+    const { stdout: stdoutStatus, stderr: stderrStatus } = await execa(
+      'git status'
+    )
+
+    if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
+
+    if (stdoutStatus.includes('no changes added to commit')) {
+      const addStagedFiles = await confirm({
+        message:
+          'No changes added to commit, would you like to add staged files ?',
+        initialValue: true,
+      })
+
+      if (addStagedFiles) {
+        const { stderr: stderrAdd } = await execa('git add .')
+
+        if (stderrAdd) throw new CliError(`An error occured: ${stderrAdd}`)
+
+        const { stderr: stderrCmd } = await execa(cmd)
+
+        if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
+
+        outro("You're all set!")
+      }
+
+      return
+    }
+
+    const { stderr } = await execa(cmd)
 
     if (stderr) throw new CliError(`An error occured: ${stderr}`)
 
-    console.log(stdout)
-    console.log(commit)
+    outro("You're all set!")
   } catch (err: any) {
     log({ type: 'error', msg: err.message })
     handleCliError(err)
