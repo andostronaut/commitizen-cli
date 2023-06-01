@@ -58,9 +58,9 @@ export const commiter = async () => {
       return
     }
 
-    const { stderr } = await execa(cmd)
+    const { stderr: stderrCmd } = await execa(cmd)
 
-    if (stderr) throw new CliError(`An error occured: ${stderr}`)
+    if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
 
     outro("You're all set!")
   } catch (err: any) {
