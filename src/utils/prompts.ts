@@ -5,10 +5,12 @@ export const type = () =>
     message: 'Choose commit type',
     options: [
       { label: 'Feature', value: 'feature' },
-      { label: 'Bug', value: 'bug' },
+      { label: 'Bugfix', value: 'bugfix' },
+      { label: 'Hotfix', value: 'hotfix' },
       { label: 'Chore', value: 'chore' },
+      { label: 'Epic', value: 'epic' },
       { label: 'Design', value: 'design' },
-      { label: 'Experimental', value: 'experimental' },
+      { label: 'Experiment', value: 'experiment' },
     ],
   })
 
