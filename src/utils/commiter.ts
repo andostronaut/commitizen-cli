@@ -40,7 +40,7 @@ export const commiter = async () => {
     if (stdoutStatus.includes('no changes added to commit')) {
       const addStagedFiles = await confirm({
         message:
-          'No changes added to commit, would you like to add staged files ?',
+          'No changes added to commit, would you like to add modified files ?',
         initialValue: true,
       })
 
