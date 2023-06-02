@@ -43,7 +43,7 @@
     "lint:fix": "prettier --write . && eslint --fix",
     "clean": "rimraf dist",
     "build": "pkgroll",
-    "publish": "npm run clean && npm run build && npm run publish --follow-tags",
+    "publish": "npm run clean && npm run build && npm publish --follow-tags",
     "publish:major": "npm run clean && npm run build && npm version major && npm run build && npm publish && git push --follow-tags",
     "publish:minor": "npm run clean && npm run build && npm version minor && npm run build && npm publish && git push --follow-tags",
     "publish:patch": "npm run clean && npm run build && npm version patch && npm run build && npm publish && git push --follow-tags"
