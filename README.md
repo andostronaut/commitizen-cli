@@ -14,6 +14,14 @@ Command-line interface tool that helps enforce standardized commit message forma
 - **User-Friendly Interface**: Interactive prompt-based interface for creating compliant commit messages without worrying about format details.
 - **Integration with Git**: Seamlessly commit changes directly from the CLI, ensuring compliance with the chosen commit message convention.
 
+## Installation
+
+To install commitizen-cli, use:
+
+```shell
+npm install -g commitizen-cli
+```
+
 ## Support
 
 Commitizen CLI is an MIT-licensed open source project. It can grow thanks to the sponsors and support.
