@@ -22,6 +22,12 @@ To install commitizen-cli, use:
 npm install -g commitizen-cli
 ```
 
+or if you don't like to install it globaly, use:
+
+```shell
+npx commitizen-cli
+```
+
 ## Usage
 
 Navigate to your Git repository.
