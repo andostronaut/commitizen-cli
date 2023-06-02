@@ -22,6 +22,26 @@ To install commitizen-cli, use:
 npm install -g commitizen-cli
 ```
 
+## Usage
+
+Navigate to your Git repository.
+
+Run the following command:
+
+```shell
+commitizen-cli
+```
+
+or use the minified command:
+
+```shell
+cc
+```
+
+Follow the prompts to generate a standardized commit message.
+
+The CLI will execute the Git command to commit your changes with the generated message.
+
 ## Support
 
 Commitizen CLI is an MIT-licensed open source project. It can grow thanks to the sponsors and support.
