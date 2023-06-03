@@ -5,9 +5,10 @@ import { lightYellow } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, message } from './prompts'
+import { type, message, emoji } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
+import { formatCommitWithEmojiByType } from './emojis'
 
 const execa = promisify(exec)
 
@@ -18,6 +19,7 @@ export const commiter = async () => {
     {
       type: () => type(),
       message: () => message(),
+      emoji: () => emoji(),
     },
     {
       onCancel: () => {
@@ -28,7 +30,17 @@ export const commiter = async () => {
   )
 
   try {
-    const commit = `${values.type}: ${values.message}`
+    let commit = ''
+
+    if (values.emoji) {
+      commit = formatCommitWithEmojiByType({
+        type: values.type,
+        message: values.message,
+      })
+    } else {
+      commit = `${values.type}: ${values.message}`
+    }
+
     const cmd = `git commit -m "${commit}"`
 
     const { stdout: stdoutStatus, stderr: stderrStatus } = await execa(
