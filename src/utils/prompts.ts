@@ -1,4 +1,4 @@
-import { select, text } from '@clack/prompts'
+import { select, text, confirm } from '@clack/prompts'
 
 export const type = () =>
   select({
@@ -12,7 +12,7 @@ export const type = () =>
       { label: 'Design', value: 'design' },
       { label: 'Experiment', value: 'experiment' },
     ],
-  })
+  }) as Promise<string>
 
 export const message = () =>
   text({
@@ -20,4 +20,11 @@ export const message = () =>
     validate: value => {
       if (value.length === 0) return 'Commit message required'
     },
-  })
+  }) as Promise<string>
+
+export const emoji = () => {
+  confirm({
+    message: 'Use emoji on commit type ?',
+    initialValue: true,
+  }) as Promise<boolean>
+}
