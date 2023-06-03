@@ -13,6 +13,7 @@ Command-line interface tool that helps enforce standardized commit message forma
 - **Conventional Commit Support**: Easily generate commit messages following popular commit conventions like Conventional Commits.
 - **User-Friendly Interface**: Interactive prompt-based interface for creating compliant commit messages without worrying about format details.
 - **Integration with Git**: Seamlessly commit changes directly from the CLI, ensuring compliance with the chosen commit message convention.
+- **Emoji Support**: Add emojis to your commit messages to express the nature of the changes or provide additional context.
 
 ## Installation
 
