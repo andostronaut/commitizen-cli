@@ -5,7 +5,7 @@ import { lightYellow } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, message, emoji } from './prompts'
+import { type, message } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import { formatCommitWithEmojiByType } from './emojis'
@@ -19,7 +19,6 @@ export const commiter = async () => {
     {
       type: () => type(),
       message: () => message(),
-      emoji: () => emoji(),
     },
     {
       onCancel: () => {
@@ -32,7 +31,12 @@ export const commiter = async () => {
   try {
     let commit = ''
 
-    if (values.emoji) {
+    const useEmoji = await confirm({
+      message: 'Use emoji on commit type ?',
+      initialValue: false,
+    })
+
+    if (useEmoji) {
       commit = formatCommitWithEmojiByType({
         type: values.type,
         message: values.message,
