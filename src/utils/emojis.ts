@@ -13,6 +13,7 @@ export const formatCommitWithEmojiByType = ({
     epic: '📌',
     design: '🎨',
     experiment: '🧪',
+    documentation: '📝',
   }
 
   return `${emojiByType[type]} ${type}: ${message}`
