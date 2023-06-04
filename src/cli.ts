@@ -5,11 +5,13 @@ import { commiter } from './utils/commiter'
 import { handleCliError } from './utils/cli-errror'
 import { log } from './utils/log'
 
+import update from './commands/update'
+
 cli(
   {
     name: PACKAGE_NAME,
     version: VERSION,
-    commands: [],
+    commands: [update],
   },
   () => {
     commiter().catch((err: any) => {
