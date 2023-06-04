@@ -14,11 +14,19 @@ export default command(
 
     console.log(dim(`Running: ${cmd}`))
 
-    const { stderr } = spawn(cmd, {
+    const update = spawn(cmd, {
       stdio: 'inherit',
       shell: process.env.SHELL || true,
     })
 
-    if (stderr) throw new CliError('An error occured on updating package')
+    update.stderr?.on('error', () => {
+      throw new CliError('An error occured on updating package')
+    })
+
+    update.on('close', code => {
+      if (code !== 0) {
+        console.log(`update process exited with code ${code}`)
+      }
+    })
   }
 )
