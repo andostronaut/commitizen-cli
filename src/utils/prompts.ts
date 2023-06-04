@@ -11,6 +11,7 @@ export const type = () =>
       { label: 'Epic', value: 'epic' },
       { label: 'Design', value: 'design' },
       { label: 'Experiment', value: 'experiment' },
+      { label: 'Documentation', value: 'documentation' },
     ],
   }) as Promise<string>
 
