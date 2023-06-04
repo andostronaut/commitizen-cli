@@ -29,7 +29,7 @@ export const commiter = async () => {
   )
 
   try {
-    let commit = ''
+    let commit = null
 
     const useEmoji = await confirm({
       message: 'Use emoji on commit type ?',
