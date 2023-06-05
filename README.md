@@ -45,6 +45,20 @@ or use the minified command:
 cc
 ```
 
+### Update
+
+To update to the latest version, use:
+
+```shell
+commitizen-cli update
+```
+
+or using the minified command:
+
+```shell
+cc update
+```
+
 Follow the prompts to generate a standardized commit message.
 
 The CLI will execute the Git command to commit your changes with the generated message.
