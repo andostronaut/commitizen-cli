@@ -53,10 +53,15 @@ export const commiter = async () => {
 
     if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
-    if (stdoutStatus.includes('no changes added to commit')) {
+    if (
+      stdoutStatus.includes('Changes not staged for commit') ||
+      stdoutStatus.includes('Untracked files')
+    ) {
+      const type = stdoutStatus.includes('Changes not staged for commit')
+        ? 'modified'
+        : 'untracked'
       const addStagedFiles = await confirm({
-        message:
-          'No changes added to commit, would you like to add modified files ?',
+        message: `No changes added to commit, would you like to add ${type} files ?`,
         initialValue: true,
       })
 
