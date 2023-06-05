@@ -54,10 +54,12 @@ export const commiter = async () => {
     if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
     if (
-      stdoutStatus.includes('Changes not staged for commit') ||
-      stdoutStatus.includes('Untracked files')
+      stdoutStatus.includes('no changes added to commit') ||
+      stdoutStatus.includes(
+        'nothing added to commit but untracked files present'
+      )
     ) {
-      const type = stdoutStatus.includes('Changes not staged for commit')
+      const type = stdoutStatus.includes('no changes added to commit')
         ? 'modified'
         : 'untracked'
       const addStagedFiles = await confirm({
