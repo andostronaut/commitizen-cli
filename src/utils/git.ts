@@ -18,5 +18,7 @@ export const isTreeClean = async () => {
 
   if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
-  if (stdoutStatus.includes('nothing to commit, working tree clean')) return
+  if (stdoutStatus.includes('nothing to commit, working tree clean')) {
+    process.exit(1)
+  }
 }
