@@ -1,4 +1,4 @@
-import { select, text } from '@clack/prompts'
+import { select, text, confirm } from '@clack/prompts'
 
 export const type = () =>
   select({
@@ -20,5 +20,18 @@ export const message = () =>
     message: 'Insert commit message',
     validate: value => {
       if (value.length === 0) return 'Commit message required'
+    },
+  }) as Promise<string>
+
+export const hasTicket = () =>
+  confirm({
+    message: 'Has Ticket ?',
+  }) as Promise<boolean>
+
+export const ticket = () =>
+  text({
+    message: 'Insert your Ticket name',
+    validate: value => {
+      if (value.length === 0) return 'Ticket name required'
     },
   }) as Promise<string>
