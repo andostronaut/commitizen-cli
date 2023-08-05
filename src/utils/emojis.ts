@@ -1,10 +1,14 @@
 export const formatCommitWithEmojiByType = ({
   type,
   message,
+  hasTicket,
+  ticket,
 }: {
   type: string
   message: string
-}) => {
+  hasTicket?: boolean
+  ticket?: string
+}): string => {
   const emojiByType: Record<string, any> = {
     feature: '✨',
     bug: '🐛',
@@ -16,5 +20,13 @@ export const formatCommitWithEmojiByType = ({
     documentation: '📝',
   }
 
-  return `${emojiByType[type]} ${type}: ${message}`
+  let commit: string
+
+  if (hasTicket) {
+    commit = `${emojiByType[type]} ${type}(${ticket}): ${message}`
+  } else {
+    commit = `${emojiByType[type]} ${type}: ${message}`
+  }
+
+  return commit
 }

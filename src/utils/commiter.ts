@@ -5,7 +5,7 @@ import { lightYellow } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, message } from './prompts'
+import { type, message, hasTicket, ticket } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import { formatCommitWithEmojiByType } from './emojis'
@@ -19,6 +19,8 @@ export const commiter = async () => {
     {
       type: () => type(),
       message: () => message(),
+      hasTicket: () => hasTicket(),
+      ticket: () => ticket(),
     },
     {
       onCancel: () => {
@@ -40,9 +42,15 @@ export const commiter = async () => {
       commit = formatCommitWithEmojiByType({
         type: values.type,
         message: values.message,
+        hasTicket: values.hasTicket,
+        ticket: values.ticket,
       })
     } else {
-      commit = `${values.type}: ${values.message}`
+      if (values.hasTicket) {
+        commit = `${values.type}(${values.ticket}): ${values.message}`
+      } else {
+        commit = `${values.type}: ${values.message}`
+      }
     }
 
     const cmd = `git commit -m "${commit}"`
