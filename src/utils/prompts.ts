@@ -26,6 +26,7 @@ export const message = () =>
 export const hasTicket = () =>
   confirm({
     message: 'Has Ticket ?',
+    initialValue: false,
   }) as Promise<boolean>
 
 export const ticket = () =>
