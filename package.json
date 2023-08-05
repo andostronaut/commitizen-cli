@@ -6,7 +6,7 @@
   "license": "MIT",
   "bin": {
     "commitizen-cli": "./dist/cli.mjs",
-    "cc": "./dist/cli.mjs"
+    "cocli": "./dist/cli.mjs"
   },
   "author": {
     "name": "iamando",
