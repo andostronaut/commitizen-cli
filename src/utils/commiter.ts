@@ -1,5 +1,3 @@
-import { promisify } from 'node:util'
-import { exec } from 'node:child_process'
 import { cancel, intro, group, confirm, outro } from '@clack/prompts'
 import { bgYellow, black } from 'kolorist'
 import dedent from 'dedent'
@@ -9,9 +7,7 @@ import { type, message, hasTicket, ticket } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import { formatCommitWithEmojiByType } from './emojis'
-import { isTreeClean } from './git'
-
-const execa = promisify(exec)
+import { isTreeClean, gitAdd, gitStatus, gitCommit } from './git'
 
 export const commiter = async () => {
   intro(bgYellow(black('Commitizen CLI')))
@@ -56,11 +52,7 @@ export const commiter = async () => {
       }
     }
 
-    const cmd = `git commit -m "${commit}"`
-
-    const { stdout: stdoutStatus, stderr: stderrStatus } = await execa(
-      'git status'
-    )
+    const { stdoutStatus, stderrStatus } = await gitStatus()
 
     if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
@@ -79,13 +71,14 @@ export const commiter = async () => {
       })
 
       if (addStagedFiles) {
-        const { stderr: stderrAdd } = await execa('git add .')
+        const { stderrAdd } = await gitAdd()
 
         if (stderrAdd) throw new CliError(`An error occured: ${stderrAdd}`)
 
-        const { stderr: stderrCmd } = await execa(cmd)
+        const { stderrCommit } = await gitCommit({ commit })
 
-        if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
+        if (stderrCommit)
+          throw new CliError(`An error occured: ${stderrCommit}`)
 
         outro(dedent`
         You're all set 🎉
@@ -97,9 +90,9 @@ export const commiter = async () => {
       return
     }
 
-    const { stderr: stderrCmd } = await execa(cmd)
+    const { stderrCommit } = await gitCommit({ commit })
 
-    if (stderrCmd) throw new CliError(`An error occured: ${stderrCmd}`)
+    if (stderrCommit) throw new CliError(`An error occured: ${stderrCommit}`)
 
     outro(dedent`
     You're all set 🎉

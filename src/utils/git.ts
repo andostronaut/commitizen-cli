@@ -7,12 +7,26 @@ import { CliError } from './cli-errror'
 
 const execa = promisify(exec)
 
-const gitStatus = async () => {
+export const gitStatus = async () => {
   const { stdout: stdoutStatus, stderr: stderrStatus } = await execa(
     'git status'
   )
 
   return { stdoutStatus, stderrStatus }
+}
+
+export const gitAdd = async () => {
+  const { stdout: stdoutAdd, stderr: stderrAdd } = await execa('git add .')
+
+  return { stdoutAdd, stderrAdd }
+}
+
+export const gitCommit = async ({ commit }: { commit: string }) => {
+  const { stdout: stdoutCommit, stderr: stderrCommit } = await execa(
+    `git commit -m "${commit}"`
+  )
+
+  return { stdoutCommit, stderrCommit }
 }
 
 export const isTreeClean = async () => {
