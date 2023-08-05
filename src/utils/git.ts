@@ -1,5 +1,7 @@
 import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
+import { outro } from '@clack/prompts'
+import dedent from 'dedent'
 
 import { CliError } from './cli-errror'
 
@@ -19,6 +21,10 @@ export const isTreeClean = async () => {
   if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
   if (stdoutStatus.includes('nothing to commit, working tree clean')) {
+    outro(dedent`
+    Nothing to commit, working tree clean 🧹
+  `)
+
     process.exit(1)
   }
 }
