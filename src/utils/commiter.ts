@@ -1,7 +1,7 @@
 import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
 import { cancel, intro, group, confirm, outro } from '@clack/prompts'
-import { bgLightYellow, lightYellow } from 'kolorist'
+import { bgLightYellow, bgYellow, lightYellow } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
@@ -14,7 +14,7 @@ import { isTreeClean } from './git'
 const execa = promisify(exec)
 
 export const commiter = async () => {
-  intro(bgLightYellow('Commitizen CLI'))
+  intro(bgYellow('Commitizen CLI'))
 
   await isTreeClean()
 
