@@ -42,7 +42,7 @@ commitizen-cli
 or use the minified command:
 
 ```shell
-cc
+cocli
 ```
 
 ### Update
@@ -56,7 +56,7 @@ commitizen-cli update
 or using the minified command:
 
 ```shell
-cc update
+cocli update
 ```
 
 Follow the prompts to generate a standardized commit message.
