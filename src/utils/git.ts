@@ -5,17 +5,18 @@ import { CliError } from './cli-errror'
 
 const execa = promisify(exec)
 
-export const verifyIfFileHasChanged = async () => {
+const gitStatus = async () => {
   const { stdout: stdoutStatus, stderr: stderrStatus } = await execa(
     'git status'
   )
 
+  return { stdoutStatus, stderrStatus }
+}
+
+export const isTreeClean = async () => {
+  const { stdoutStatus, stderrStatus } = await gitStatus()
+
   if (stderrStatus) throw new CliError(`An error occured: ${stderrStatus}`)
 
-  if (
-    stdoutStatus.includes('no changes added to commit') ||
-    stdoutStatus.includes('nothing added to commit but untracked files present')
-  ) {
-    return
-  }
+  if (stdoutStatus.includes('nothing to commit, working tree clean')) return
 }

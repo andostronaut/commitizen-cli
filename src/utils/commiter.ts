@@ -9,14 +9,14 @@ import { type, message, hasTicket, ticket } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import { formatCommitWithEmojiByType } from './emojis'
-import { verifyIfFileHasChanged } from './git'
+import { isTreeClean } from './git'
 
 const execa = promisify(exec)
 
 export const commiter = async () => {
   intro(lightYellow('Commitizen CLI'))
 
-  await verifyIfFileHasChanged()
+  await isTreeClean()
 
   const values = await group(
     {
