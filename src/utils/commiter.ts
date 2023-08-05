@@ -75,7 +75,7 @@ export const commiter = async () => {
 
         if (stderrAdd) throw new CliError(`An error occured: ${stderrAdd}`)
 
-        const { stderrCommit } = await gitCommit({ commit })
+        const { stderrCommit } = await gitCommit({ commit: commit.trim() })
 
         if (stderrCommit)
           throw new CliError(`An error occured: ${stderrCommit}`)
@@ -90,7 +90,7 @@ export const commiter = async () => {
       return
     }
 
-    const { stderrCommit } = await gitCommit({ commit })
+    const { stderrCommit } = await gitCommit({ commit: commit.trim() })
 
     if (stderrCommit) throw new CliError(`An error occured: ${stderrCommit}`)
 
