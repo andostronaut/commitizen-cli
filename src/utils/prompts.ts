@@ -1,4 +1,7 @@
+import _ from 'lodash'
 import { select, text, confirm } from '@clack/prompts'
+
+import { hasPatternKeys } from './pattern'
 
 export const type = () =>
   select({
@@ -19,7 +22,7 @@ export const message = () =>
   text({
     message: 'Insert commit message',
     validate: value => {
-      if (value.length === 0) return 'Commit message required'
+      if (_.isEmpty(value)) return 'Commit message required'
     },
   }) as Promise<string>
 
@@ -34,7 +37,7 @@ export const ticket = async () => {
   text({
     message: 'Insert ticket name',
     validate: value => {
-      if (value.length === 0) return 'Ticket name required'
+      if (_.isEmpty(value)) return 'Ticket name required'
     },
   }) as Promise<string>
 }
@@ -51,7 +54,10 @@ export const pattern = async () => {
     message: 'Insert specific pattern',
     placeholder: 'Example: :type(:ticket): :commit',
     validate: value => {
-      if (value.length === 0) return 'Specific pattern required'
+      if (_.isEmpty(value)) return 'Specific pattern required'
+
+      if (!hasPatternKeys)
+        return 'Pattern key not invalid (ex: :type, :ticket: commit)'
     },
   }) as Promise<string>
 }
