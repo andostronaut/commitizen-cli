@@ -1,7 +1,18 @@
 import _ from 'lodash'
 import { text, confirm } from '@clack/prompts'
 
-type PatternValues = { [key: string]: string | undefined }
+type PatternValues = { [key: string]: string }
+
+const emojiByType: Record<string, any> = {
+  feature: '✨',
+  bug: '🐛',
+  hotfix: '🚑',
+  chore: '🛠️',
+  epic: '📌',
+  design: '🎨',
+  experiment: '🧪',
+  documentation: '📝',
+}
 
 export const pattern = async ({
   type,
@@ -34,17 +45,6 @@ export const pattern = async ({
         return 'Pattern key not invalid (ex: :type, :ticket, :commit)'
     },
   })
-}
-
-const emojiByType: Record<string, any> = {
-  feature: '✨',
-  bug: '🐛',
-  hotfix: '🚑',
-  chore: '🛠️',
-  epic: '📌',
-  design: '🎨',
-  experiment: '🧪',
-  documentation: '📝',
 }
 
 export const hasPatternKeys = ({
@@ -81,9 +81,9 @@ const replace = ({
   pattern,
   values,
 }: {
-  pattern: string | undefined
+  pattern: string
   values: PatternValues
-}): string | undefined => {
+}): string => {
   for (const value in values) {
     pattern = pattern?.replace(
       new RegExp(value, 'g'),
@@ -105,7 +105,7 @@ export const transform = async ({
   commit: string
   ticket: string | any
   emoji: boolean
-  pattern: string | undefined
+  pattern: string
 }): Promise<string> => {
   const patternKeys = {
     ':type': type,
