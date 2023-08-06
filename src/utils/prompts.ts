@@ -1,8 +1,6 @@
 import _ from 'lodash'
 import { select, text, confirm } from '@clack/prompts'
 
-import { hasPatternKeys } from './pattern'
-
 export const type = () =>
   select({
     message: 'Choose commit type',
@@ -18,7 +16,7 @@ export const type = () =>
     ],
   }) as Promise<string>
 
-export const message = () =>
+export const commit = () =>
   text({
     message: 'Insert commit message',
     validate: value => {
@@ -34,30 +32,16 @@ export const ticket = async () => {
 
   if (!hasTicket) return
 
-  text({
+  await text({
     message: 'Insert ticket name',
     validate: value => {
       if (_.isEmpty(value)) return 'Ticket name required'
     },
-  }) as Promise<string>
-}
-
-export const pattern = async () => {
-  const hasPattern = await confirm({
-    message: 'Has specific pattern ?',
-    initialValue: false,
   })
-
-  if (!hasPattern) return
-
-  text({
-    message: 'Insert specific pattern',
-    placeholder: 'Example: :type(:ticket): :commit',
-    validate: value => {
-      if (_.isEmpty(value)) return 'Specific pattern required'
-
-      if (!hasPatternKeys)
-        return 'Pattern key not invalid (ex: :type, :ticket: commit)'
-    },
-  }) as Promise<string>
 }
+
+export const emoji = () =>
+  confirm({
+    message: 'Use emoji on commit type ?',
+    initialValue: false,
+  }) as Promise<boolean>

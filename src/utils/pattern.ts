@@ -1,29 +1,117 @@
-type PatternValues = { [key: string]: string }
+import _ from 'lodash'
+import { text, confirm } from '@clack/prompts'
 
-const replacePattern = (pattern: string, values: PatternValues): string => {
+type PatternValues = { [key: string]: string | undefined }
+
+export const pattern = async ({
+  type,
+  commit,
+  ticket,
+  emoji,
+}: {
+  type: string
+  commit: string
+  ticket: string | any
+  emoji: boolean
+}) => {
+  const hasPattern = await confirm({
+    message: 'Has specific pattern ?',
+    initialValue: false,
+  })
+
+  if (!hasPattern) return ':emoji :type(:ticket): :commit'
+
+  await text({
+    message: 'Insert specific pattern',
+    placeholder: 'Example: :type(:ticket): :commit',
+    defaultValue: ':emoji :type(:ticket): :commit',
+    validate: value => {
+      if (_.isEmpty(value)) return 'Specific pattern required'
+
+      if (!hasPatternKeys({ type, commit, ticket, emoji, pattern: value }))
+        return 'Pattern key not invalid (ex: :type, :ticket, :commit)'
+    },
+  })
+}
+
+const emojiByType: Record<string, any> = {
+  feature: '✨',
+  bug: '🐛',
+  hotfix: '🚑',
+  chore: '🛠️',
+  epic: '📌',
+  design: '🎨',
+  experiment: '🧪',
+  documentation: '📝',
+}
+
+export const hasPatternKeys = ({
+  type,
+  commit,
+  ticket,
+  emoji,
+  pattern,
+}: {
+  type: string
+  commit: string
+  ticket: string | any
+  emoji: boolean
+  pattern: string
+}): boolean => {
+  const patternKeys: Array<string> = []
+
+  !_.isEmpty(type)
+    ? patternKeys.push(':type')
+    : !_.isEmpty(commit)
+    ? patternKeys.push(':commit')
+    : !_.isEmpty(ticket)
+    ? patternKeys.push(':ticket')
+    : emoji
+    ? patternKeys.push(':emoji')
+    : ''
+
+  const containKeys = patternKeys.every(key => pattern.includes(key))
+
+  return containKeys
+}
+
+const replace = ({
+  pattern,
+  values,
+}: {
+  pattern: string | undefined
+  values: PatternValues
+}): string | undefined => {
   for (const value in values) {
-    pattern = pattern.replace(new RegExp(value, 'g'), values[value])
+    pattern = pattern?.replace(
+      new RegExp(value, 'g'),
+      values[value] as string
+    ) as string
   }
 
   return pattern
 }
 
-export const transformPattern = (pattern: string) => {
+export const transform = async ({
+  type,
+  commit,
+  ticket,
+  emoji,
+  pattern,
+}: {
+  type: string
+  commit: string
+  ticket: string | any
+  emoji: boolean
+  pattern: string | undefined
+}): Promise<string> => {
   const patternKeys = {
-    ':type': '',
-    ':ticket': '',
-    ':commit': '',
+    ':type': type,
+    ':ticket': ticket,
+    ':commit': commit,
+    ':emoji': emoji ? emojiByType[type] : '',
   }
-  const commit = replacePattern(pattern, patternKeys)
+  const message = replace({ pattern, values: patternKeys }) as string
 
-  return commit
-}
-
-export const hasPatternKeys = (pattern: string) => {
-  const patternKey = [':type', ':ticket', ':commit']
-  const containKeys = patternKey.every(sub => {
-    return pattern.includes(sub)
-  })
-
-  return containKeys
+  return message
 }
