@@ -29,7 +29,7 @@ export const pattern = async ({
 
   ticket
     ? (defaultPattern = ':emoji :type(:ticket): :commit')
-    : (defaultPattern = ':emoji :type :commit')
+    : (defaultPattern = ':emoji :type: :commit')
 
   const hasPattern = await confirm({
     message: 'Has specific pattern ?',
