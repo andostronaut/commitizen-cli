@@ -25,16 +25,33 @@ export const message = () =>
 
 export const ticket = async () => {
   const hasTicket = await confirm({
-    message: 'Has Ticket ?',
+    message: 'Has ticket ?',
     initialValue: false,
   })
 
   if (!hasTicket) return
 
   text({
-    message: 'Insert your Ticket name',
+    message: 'Insert ticket name',
     validate: value => {
       if (value.length === 0) return 'Ticket name required'
+    },
+  }) as Promise<string>
+}
+
+export const pattern = async () => {
+  const hasPattern = await confirm({
+    message: 'Has specific pattern ?',
+    initialValue: false,
+  })
+
+  if (!hasPattern) return
+
+  text({
+    message: 'Insert specific pattern',
+    placeholder: 'Example: :type(:ticket): :commit',
+    validate: value => {
+      if (value.length === 0) return 'Specific pattern required'
     },
   }) as Promise<string>
 }
