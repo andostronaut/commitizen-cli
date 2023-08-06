@@ -4,22 +4,23 @@ import { bgYellow, black } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, message, ticket } from './prompts'
+import { type, commit, ticket, emoji } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
-import { formatCommitWithEmojiByType } from './emojis'
 import { isTreeClean, gitAdd, gitStatus, gitCommit } from './git'
+import { pattern, transform } from './pattern'
 
 export const commiter = async () => {
   intro(bgYellow(black('Commitizen CLI')))
 
   await isTreeClean()
 
-  const values: any = await group(
+  const values = await group(
     {
       type: () => type(),
-      message: () => message(),
+      commit: () => commit(),
       ticket: () => ticket(),
+      emoji: () => emoji(),
     },
     {
       onCancel: () => {
@@ -30,26 +31,22 @@ export const commiter = async () => {
   )
 
   try {
-    let commit: string
-
-    const useEmoji = await confirm({
-      message: 'Use emoji on commit type ?',
-      initialValue: false,
+    const blueprint: any = await pattern({
+      type: values.type,
+      commit: values.commit,
+      ticket: values.ticket,
+      emoji: values.emoji,
     })
 
-    if (useEmoji) {
-      commit = formatCommitWithEmojiByType({
-        type: values.type,
-        message: values.message,
-        ticket: values.ticket,
-      })
-    } else {
-      if (!_.isEmpty(values.ticket)) {
-        commit = `${values.type}(${values.ticket}): ${values.message}`
-      } else {
-        commit = `${values.type}: ${values.message}`
-      }
-    }
+    if (_.isEmpty(blueprint)) return
+
+    const commit: string = await transform({
+      type: values.type,
+      commit: values.commit,
+      ticket: values.ticket,
+      emoji: values.emoji,
+      pattern: blueprint,
+    })
 
     const { stdoutStatus, stderrStatus } = await gitStatus()
 
