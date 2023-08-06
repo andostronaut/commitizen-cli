@@ -107,7 +107,7 @@ export const transform = async ({
 }): Promise<string> => {
   const patternKeys = {
     ':type': type,
-    ':ticket': ticket,
+    ':ticket': ticket ?? '',
     ':commit': commit,
     ':emoji': emoji ? emojiByType[type] : '',
   }

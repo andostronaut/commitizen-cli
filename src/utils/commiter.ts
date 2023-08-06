@@ -38,8 +38,6 @@ export const commiter = async () => {
       emoji: values.emoji,
     })
 
-    console.log(blueprint)
-
     if (_.isEmpty(blueprint)) return
 
     const commit: string = await transform({
