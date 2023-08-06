@@ -25,7 +25,11 @@ export const pattern = async ({
   ticket: string | any
   emoji: boolean
 }) => {
-  const defaultPattern = ':emoji :type(:ticket): :commit'
+  let defaultPattern: string
+
+  ticket
+    ? (defaultPattern = ':emoji :type(:ticket): :commit')
+    : (defaultPattern = ':emoji :type :commit')
 
   const hasPattern = await confirm({
     message: 'Has specific pattern ?',
