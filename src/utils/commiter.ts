@@ -1,9 +1,10 @@
+import _ from 'lodash'
 import { cancel, intro, group, confirm, outro } from '@clack/prompts'
 import { bgYellow, black } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, message, hasTicket, ticket } from './prompts'
+import { type, message, ticket } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import { formatCommitWithEmojiByType } from './emojis'
@@ -14,11 +15,10 @@ export const commiter = async () => {
 
   await isTreeClean()
 
-  const values = await group(
+  const values: any = await group(
     {
       type: () => type(),
       message: () => message(),
-      hasTicket: () => hasTicket(),
       ticket: () => ticket(),
     },
     {
@@ -41,11 +41,10 @@ export const commiter = async () => {
       commit = formatCommitWithEmojiByType({
         type: values.type,
         message: values.message,
-        hasTicket: values.hasTicket,
         ticket: values.ticket,
       })
     } else {
-      if (values.hasTicket) {
+      if (!_.isEmpty(values.ticket)) {
         commit = `${values.type}(${values.ticket}): ${values.message}`
       } else {
         commit = `${values.type}: ${values.message}`

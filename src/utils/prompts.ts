@@ -23,16 +23,18 @@ export const message = () =>
     },
   }) as Promise<string>
 
-export const hasTicket = () =>
-  confirm({
+export const ticket = async () => {
+  const hasTicket = await confirm({
     message: 'Has Ticket ?',
     initialValue: false,
-  }) as Promise<boolean>
+  })
 
-export const ticket = () =>
+  if (!hasTicket) return
+
   text({
     message: 'Insert your Ticket name',
     validate: value => {
       if (value.length === 0) return 'Ticket name required'
     },
   }) as Promise<string>
+}
