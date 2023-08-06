@@ -14,17 +14,19 @@ export const pattern = async ({
   ticket: string | any
   emoji: boolean
 }) => {
+  const defaultPattern = ':emoji :type(:ticket): :commit'
+
   const hasPattern = await confirm({
     message: 'Has specific pattern ?',
     initialValue: false,
   })
 
-  if (!hasPattern) return ':emoji :type(:ticket): :commit'
+  if (!hasPattern) return defaultPattern
 
   await text({
     message: 'Insert specific pattern',
     placeholder: 'Example: :type(:ticket): :commit',
-    defaultValue: ':emoji :type(:ticket): :commit',
+    defaultValue: defaultPattern,
     validate: value => {
       if (_.isEmpty(value)) return 'Specific pattern required'
 
