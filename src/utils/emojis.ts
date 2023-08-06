@@ -1,12 +1,12 @@
+import _ from 'lodash'
+
 export const formatCommitWithEmojiByType = ({
   type,
   message,
-  hasTicket,
   ticket,
 }: {
   type: string
   message: string
-  hasTicket?: boolean
   ticket?: string
 }): string => {
   const emojiByType: Record<string, any> = {
@@ -22,7 +22,7 @@ export const formatCommitWithEmojiByType = ({
 
   let commit: string
 
-  if (hasTicket) {
+  if (!_.isEmpty(ticket)) {
     commit = `${emojiByType[type]} ${type}(${ticket}): ${message}`
   } else {
     commit = `${emojiByType[type]} ${type}: ${message}`
