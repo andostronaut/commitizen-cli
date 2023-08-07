@@ -22,6 +22,7 @@ Command-line interface tool that helps enforce standardized commit message forma
 - **Emoji Support**: Add emojis to your commit messages to express the nature of the changes or provide additional context.
 - **Ticket Support**: Set ticket reference to your commit messages to link directly the changes with your task.
 - **Specific Pattern**: Commit pattern is flexible and customisable to provide a better commit message convention.
+- **Configuration Support**: Get or Set specific configuration like pattern config.
 
 ## Installation
 
@@ -51,6 +52,29 @@ or use the minified command:
 
 ```shell
 cocli
+```
+
+## Configuration
+
+Get or Set configuration directly to save specific config, use:
+
+```shell
+commitizen-cli config get PATTERN
+```
+
+```shell
+
+commitizen-cli config set PATTERN='specific pattern'
+```
+
+or using the minified command:
+
+```shell
+cocli config get PATTERN
+```
+
+```shell
+cocli config set PATTERN='specific pattern'
 ```
 
 ### Update
