@@ -1,4 +1,4 @@
-![Commitizen CLI](./assets/logo.png)
+![Commitizen CLI](./assets/logo-banner.png)
 
 ![build](https://github.com/iamando/commitizen-cli/workflows/build/badge.svg)
 ![license](https://img.shields.io/github/license/iamando/commitizen-cli?color=success)
