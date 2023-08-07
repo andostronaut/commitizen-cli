@@ -6,12 +6,13 @@ import { handleCliError } from './utils/cli-errror'
 import { log } from './utils/log'
 
 import update from './commands/update'
+import config from './commands/config'
 
 cli(
   {
     name: PACKAGE_NAME,
     version: VERSION,
-    commands: [update],
+    commands: [update, config],
   },
   () => {
     commiter().catch((err: any) => {
