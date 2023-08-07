@@ -15,6 +15,7 @@ Command-line interface tool that helps enforce standardized commit message forma
 - **Integration with Git**: Seamlessly commit changes directly from the CLI, ensuring compliance with the chosen commit message convention.
 - **Emoji Support**: Add emojis to your commit messages to express the nature of the changes or provide additional context.
 - **Ticket Support**: Set ticket reference to your commit messages to link directly the changes with your task.
+- **Specific Pattern**: Commit pattern is flexible and customisable to provide a better commit message convention.
 
 ## Installation
 
