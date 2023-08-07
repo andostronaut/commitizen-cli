@@ -23,6 +23,7 @@ export default command(
 
       if (mode === 'get') {
         const config = await getConfig()
+
         for (const key of keyValues) {
           if (hasOwn(config, key)) {
             console.log(`${key}=${config[key as keyof typeof config]}`)
