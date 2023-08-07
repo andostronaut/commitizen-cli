@@ -1,6 +1,6 @@
 <p align="center">
   <img 
-    src="https://github.com/iamando/commitizen-cli/blob/master/assets/logo-banner.png?raw=true" 
+    src="./assets/banner.png"
     alt="Commitizen CLI"
     style="width:100%;"
   />
