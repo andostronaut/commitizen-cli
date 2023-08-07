@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import { default as p, text, confirm, cancel } from '@clack/prompts'
+
 import { CANCELED_OP_MSG } from './constants'
+import { getConfig, setConfigs } from './config'
 
 type PatternValues = { [key: string]: string }
 
@@ -28,9 +30,15 @@ export const pattern = async ({
 }) => {
   let defaultPattern: string
 
-  ticket
-    ? (defaultPattern = ':emoji :type(:ticket): :commit')
-    : (defaultPattern = ':emoji :type: :commit')
+  const { PATTERN: configPattern } = await getConfig()
+
+  if (_.isEmpty(configPattern)) {
+    ticket
+      ? (defaultPattern = ':emoji :type(:ticket): :commit')
+      : (defaultPattern = ':emoji :type: :commit')
+  } else {
+    defaultPattern = configPattern
+  }
 
   const hasPattern = await confirm({
     message: 'Has specific pattern ?',
@@ -60,6 +68,18 @@ export const pattern = async ({
     cancel(CANCELED_OP_MSG)
     process.exit(0)
   }
+
+  const savePatterConfig = await confirm({
+    message: 'Save pattern to config ?',
+    initialValue: true,
+  })
+
+  if (p.isCancel(savePatterConfig)) {
+    cancel(CANCELED_OP_MSG)
+    process.exit(0)
+  }
+
+  setConfigs([['PATTERN', pattern]])
 }
 
 export const hasPatternKeys = ({

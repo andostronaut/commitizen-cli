@@ -12,9 +12,7 @@ export const hasOwn = (object: unknown, key: PropertyKey) =>
 
 const configParsers = {
   PATTERN(pattern?: string) {
-    if (!pattern) {
-      return ':emoji :type(:ticket): :commit'
-    }
+    if (!pattern) return ''
 
     return pattern
   },
