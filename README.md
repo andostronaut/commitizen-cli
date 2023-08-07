@@ -1,5 +1,9 @@
 <p align="center">
-  <img src="https://github.com/iamando/commitizen-cli/blob/master/assets/logo-banner.png?raw=true" alt="Commitizen CLI"/>
+  <img 
+    src="https://github.com/iamando/commitizen-cli/blob/master/assets/logo-banner.png?raw=true" 
+    alt="Commitizen CLI"
+    style="width:100%;"
+  />
 </p>
 
 ![build](https://github.com/iamando/commitizen-cli/workflows/build/badge.svg)
