@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { text, confirm } from '@clack/prompts'
+import { default as p, text, confirm, cancel } from '@clack/prompts'
+import { CANCELED_OP_MSG } from './constants'
 
 type PatternValues = { [key: string]: string }
 
@@ -36,9 +37,14 @@ export const pattern = async ({
     initialValue: false,
   })
 
+  if (p.isCancel(hasPattern)) {
+    cancel(CANCELED_OP_MSG)
+    process.exit(0)
+  }
+
   if (!hasPattern) return defaultPattern
 
-  await text({
+  const pattern = await text({
     message: 'Insert specific pattern',
     placeholder: 'Example: :type(:ticket): :commit',
     defaultValue: defaultPattern,
@@ -49,6 +55,11 @@ export const pattern = async ({
         return 'Pattern key not invalid (ex: :type, :ticket, :commit)'
     },
   })
+
+  if (p.isCancel(pattern)) {
+    cancel(CANCELED_OP_MSG)
+    process.exit(0)
+  }
 }
 
 export const hasPatternKeys = ({
