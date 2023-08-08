@@ -7,11 +7,19 @@ import { CANCELED_OP_MSG } from './constants'
 import { type, commit, ticket, emoji } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
-import { isTreeClean, gitAdd, gitStatus, gitCommit } from './git'
+import {
+  isTreeClean,
+  gitAdd,
+  gitStatus,
+  gitCommit,
+  isGitRepository,
+} from './git'
 import { pattern, transform } from './pattern'
 
 export const commiter = async () => {
   p.intro(bgYellow(black('Commitizen CLI')))
+
+  await isGitRepository()
 
   await isTreeClean()
 
