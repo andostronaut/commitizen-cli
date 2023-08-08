@@ -58,9 +58,9 @@ cocli
 
 Pattern is defined like this: ':type(:ticket): :commit'
 
-- :type: Type of commit (feature, bugfix, documentation, ...)
-- :ticket: Reference of ticket (if ticket is defined)
-- :commit: Commit message
+- `:type`: Type of commit (feature, bugfix, documentation, ...)
+- `:ticket`: Reference of ticket (if ticket is defined)
+- `:commit`: Commit message
 
 Get or Set configuration directly to save specific config, use:
 
