@@ -8,7 +8,7 @@ export default command(
   {
     name: 'config',
     parameters: ['[mode]', '[key=value...]'],
-    description: 'Set or Get Commitizen CLI configs',
+    description: 'Get or Set Commitizen CLI config',
   },
   argv => {
     ;(async () => {
