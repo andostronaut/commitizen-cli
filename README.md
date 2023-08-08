@@ -56,6 +56,12 @@ cocli
 
 ## Configuration
 
+Pattern is defined like this: ':type(:ticket): :commit'
+
+- :type: Type of commit (feature, bugfix, documentation, ...)
+- :ticket: Reference of ticket (if ticket is defined)
+- :commit: Commit message
+
 Get or Set configuration directly to save specific config, use:
 
 ```shell
@@ -63,7 +69,6 @@ commitizen-cli config get PATTERN
 ```
 
 ```shell
-
 commitizen-cli config set PATTERN='specific pattern'
 ```
 
