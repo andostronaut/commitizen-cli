@@ -1,7 +1,7 @@
 import { promisify } from 'node:util'
 import { exec } from 'node:child_process'
 import * as p from '@clack/prompts'
-import { lightGreen } from 'kolorist'
+import { lightGreen, lightYellow } from 'kolorist'
 
 import { CliError } from './cli-errror'
 
@@ -36,6 +36,19 @@ export const isTreeClean = async () => {
 
   if (stdoutStatus.includes('nothing to commit, working tree clean')) {
     p.outro(lightGreen('Nothing to commit, working tree clean 🧹'))
+
+    process.exit(1)
+  }
+}
+
+export const isGitRepository = async () => {
+  const { stdoutStatus, stderrStatus } = await gitStatus()
+
+  if (
+    stderrStatus.includes('not a git repository') ||
+    stdoutStatus.includes('not a git repository')
+  ) {
+    p.outro(lightYellow('Not a git repository 😢'))
 
     process.exit(1)
   }
