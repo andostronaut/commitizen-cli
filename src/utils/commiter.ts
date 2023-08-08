@@ -19,7 +19,7 @@ import { pattern, transform } from './pattern'
 export const commiter = async () => {
   p.intro(bgYellow(black('Commitizen CLI')))
 
-  await isGitRepository()
+  isGitRepository()
 
   await isTreeClean()
 
