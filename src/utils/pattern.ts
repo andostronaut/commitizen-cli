@@ -97,15 +97,10 @@ export const hasPatternKeys = ({
 }): boolean => {
   const patternKeys: Array<string> = []
 
-  !_.isEmpty(type)
-    ? patternKeys.push(':type')
-    : !_.isEmpty(commit)
-    ? patternKeys.push(':commit')
-    : !_.isEmpty(ticket)
-    ? patternKeys.push(':ticket')
-    : emoji
-    ? patternKeys.push(':emoji')
-    : ''
+  if (!_.isEmpty(type)) patternKeys.push(':type')
+  if (!_.isEmpty(commit)) patternKeys.push(':commit')
+  if (!_.isEmpty(ticket)) patternKeys.push(':ticket')
+  if (emoji) patternKeys.push(':emoji')
 
   const containKeys = patternKeys.every(key => pattern.includes(key))
 
