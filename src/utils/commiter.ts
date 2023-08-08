@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { cancel, intro, group, confirm, outro } from '@clack/prompts'
+import * as p from '@clack/prompts'
 import { bgYellow, black } from 'kolorist'
 import dedent from 'dedent'
 
@@ -11,11 +11,11 @@ import { isTreeClean, gitAdd, gitStatus, gitCommit } from './git'
 import { pattern, transform } from './pattern'
 
 export const commiter = async () => {
-  intro(bgYellow(black('Commitizen CLI')))
+  p.intro(bgYellow(black('Commitizen CLI')))
 
   await isTreeClean()
 
-  const values = await group(
+  const values = await p.group(
     {
       type: () => type(),
       commit: () => commit(),
@@ -24,7 +24,7 @@ export const commiter = async () => {
     },
     {
       onCancel: () => {
-        cancel(CANCELED_OP_MSG)
+        p.cancel(CANCELED_OP_MSG)
         process.exit(0)
       },
     }
@@ -61,7 +61,7 @@ export const commiter = async () => {
       const type = stdoutStatus.includes('no changes added to commit')
         ? 'modified'
         : 'untracked'
-      const addStagedFiles = await confirm({
+      const addStagedFiles = await p.confirm({
         message: `No changes added to commit, would you like to add ${type} files ?`,
         initialValue: true,
       })
@@ -76,7 +76,7 @@ export const commiter = async () => {
         if (stderrCommit)
           throw new CliError(`An error occured: ${stderrCommit}`)
 
-        outro(dedent`
+        p.outro(dedent`
         You're all set 🎉
 
         use "git push" to publish your local commits
@@ -90,7 +90,7 @@ export const commiter = async () => {
 
     if (stderrCommit) throw new CliError(`An error occured: ${stderrCommit}`)
 
-    outro(dedent`
+    p.outro(dedent`
     You're all set 🎉
 
     use "git push" to publish your local commits
