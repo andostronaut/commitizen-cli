@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { default as p, text, confirm, cancel } from '@clack/prompts'
+import * as p from '@clack/prompts'
 
 import { CANCELED_OP_MSG } from './constants'
 import { getConfig, setConfigs } from './config'
@@ -40,19 +40,19 @@ export const pattern = async ({
     defaultPattern = configPattern
   }
 
-  const hasPattern = await confirm({
+  const hasPattern = await p.confirm({
     message: 'Has specific pattern ?',
     initialValue: false,
   })
 
   if (p.isCancel(hasPattern)) {
-    cancel(CANCELED_OP_MSG)
+    p.cancel(CANCELED_OP_MSG)
     process.exit(0)
   }
 
   if (!hasPattern) return defaultPattern
 
-  const pattern = await text({
+  const pattern = await p.text({
     message: 'Insert specific pattern',
     placeholder: 'Example: :type(:ticket): :commit',
     defaultValue: defaultPattern,
@@ -65,17 +65,17 @@ export const pattern = async ({
   })
 
   if (p.isCancel(pattern)) {
-    cancel(CANCELED_OP_MSG)
+    p.cancel(CANCELED_OP_MSG)
     process.exit(0)
   }
 
-  const savePatterConfig = await confirm({
+  const savePatterConfig = await p.confirm({
     message: 'Save pattern to config ?',
     initialValue: true,
   })
 
   if (p.isCancel(savePatterConfig)) {
-    cancel(CANCELED_OP_MSG)
+    p.cancel(CANCELED_OP_MSG)
     process.exit(0)
   }
 

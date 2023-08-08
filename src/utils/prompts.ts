@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import { select, text, confirm } from '@clack/prompts'
+import * as p from '@clack/prompts'
 
 export const type = () =>
-  select({
+  p.select({
     message: 'Choose commit type',
     options: [
       { label: 'Feature', value: 'feature' },
@@ -17,7 +17,7 @@ export const type = () =>
   }) as Promise<string>
 
 export const commit = () =>
-  text({
+  p.text({
     message: 'Insert commit message',
     validate: value => {
       if (_.isEmpty(value)) return 'Commit message required'
@@ -25,14 +25,14 @@ export const commit = () =>
   }) as Promise<string>
 
 export const ticket = async () => {
-  const hasTicket = await confirm({
+  const hasTicket = await p.confirm({
     message: 'Has ticket ?',
     initialValue: false,
   })
 
   if (!hasTicket) return
 
-  await text({
+  await p.text({
     message: 'Insert ticket name',
     validate: value => {
       if (_.isEmpty(value)) return 'Ticket name required'
@@ -41,7 +41,7 @@ export const ticket = async () => {
 }
 
 export const emoji = () =>
-  confirm({
+  p.confirm({
     message: 'Use emoji on commit type ?',
     initialValue: false,
   }) as Promise<boolean>
