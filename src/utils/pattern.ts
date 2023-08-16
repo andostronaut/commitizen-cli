@@ -8,7 +8,7 @@ type PatternValues = { [key: string]: string }
 
 const emojiByType: Record<string, any> = {
   feature: '✨',
-  bug: '🐛',
+  bugfix: '🐛',
   hotfix: '🚑',
   chore: '🛠️',
   epic: '📌',
