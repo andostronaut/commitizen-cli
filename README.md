@@ -61,6 +61,16 @@ or use the minified command:
 cocli
 ```
 
+## Updating from a Previous Version
+
+If you have previously installed a version that is older than 3.0.0, it's important to follow these steps to ensure a smooth update process. The new version introduces significant changes that might conflict with remnants of the old installation.
+
+It's recommended to use the clean command to remove any residual configurations that might still be present. Run the following command:
+
+```shell
+commitizen-cli clean
+```
+
 ## Commands
 
 ### Update Command
