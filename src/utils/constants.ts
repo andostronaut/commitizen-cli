@@ -5,3 +5,10 @@ export const VERSION = version
 export const AUTHOR = author
 
 export const CANCELED_OP_MSG = 'Operation Canceled'
+
+export const commitKeys = Object.freeze({
+  type: '<type>',
+  ticket: '<ticket>',
+  commit: '<commit>',
+  emoji: '<emoji>',
+})
