@@ -7,12 +7,13 @@ import { log } from './utils/log'
 
 import update from './commands/update'
 import config from './commands/config'
+import clean from './commands/clean'
 
 cli(
   {
     name: PACKAGE_NAME,
     version: VERSION,
-    commands: [update, config],
+    commands: [update, config, clean],
   },
   () => {
     commiter().catch((err: any) => {
