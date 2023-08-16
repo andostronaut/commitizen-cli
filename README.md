@@ -55,11 +55,34 @@ cocli
 
 ## Configuration
 
-Pattern is defined like this: ':type(:ticket): :commit'
+List of type available:
 
-- `:type`: Type of commit (feature, bugfix, documentation, ...)
-- `:ticket`: Reference of ticket (if ticket is defined)
-- `:commit`: Commit message
+- feature ✨
+- bugfix 🐛
+- hotfix 🚑
+- chore 🛠️
+- epic 📌
+- design 🎨
+- experiment 🧪
+- documentation 📝
+
+Pattern is defined like this: `<type>`(`<ticket>`): `<commit>`
+
+- `<type>`: Type of commit (feature, bugfix, documentation, ...)
+- `<ticket>`: Reference of ticket (if ticket is defined)
+- `<commit>`: Commit message
+
+Example: design(XXX-000): implement responsive design
+
+But `<ticket>` is an optional pattern, you can set it to false on prompt and the default pattern is like this: `<type>`: `<commit>`
+
+Example: feature: implement new chat system on the frontend
+
+And `<emoji>` is an optional pattern too, if you like to make your commit cool you can check the use emoji prompt and define custom pattern with `<emoji>`,
+like this:
+
+- if you have `<ticket>` reference: `<emoji>` `<type>`(`<ticket>`): `<commit>`: 📝 documention(XXX-000): creating new docs on the package
+- or not: `<emoji>` `<type>`: `<commit>`: 📝 documention: creating new docs on the package
 
 Get or Set configuration directly to save specific config, use:
 
