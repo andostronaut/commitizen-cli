@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import * as p from '@clack/prompts'
 
-import { CANCELED_OP_MSG } from './constants'
+import { CANCELED_OP_MSG, commitKeys } from './constants'
 import { getConfig, setConfigs } from './config'
 
 type PatternValues = { [key: string]: string }
@@ -34,8 +34,8 @@ export const pattern = async ({
 
   if (_.isEmpty(configPattern)) {
     ticket
-      ? (defaultPattern = ':emoji :type(:ticket): :commit')
-      : (defaultPattern = ':emoji :type: :commit')
+      ? (defaultPattern = `${commitKeys.emoji} ${commitKeys.type}(${commitKeys.ticket}): ${commitKeys.commit}`)
+      : (defaultPattern = `${commitKeys.emoji} ${commitKeys.type}: ${commitKeys.commit}`)
   } else {
     defaultPattern = configPattern
   }
@@ -54,13 +54,13 @@ export const pattern = async ({
 
   const pattern = await p.text({
     message: 'Insert specific pattern',
-    placeholder: 'Example: :type(:ticket): :commit',
+    placeholder: `Example: ${commitKeys.type}(${commitKeys.ticket}): ${commitKeys.commit}`,
     defaultValue: defaultPattern,
     validate: value => {
       if (_.isEmpty(value)) return 'Specific pattern required'
 
       if (!hasPatternKeys({ type, commit, ticket, emoji, pattern: value }))
-        return 'Pattern key not invalid (ex: :type, :ticket, :commit)'
+        return `Pattern key not invalid (ex: ${commitKeys.type}, ${commitKeys.ticket}, ${commitKeys.commit})`
     },
   })
 
@@ -97,10 +97,10 @@ export const hasPatternKeys = ({
 }): boolean => {
   const patternKeys: Array<string> = []
 
-  if (!_.isEmpty(type)) patternKeys.push(':type')
-  if (!_.isEmpty(commit)) patternKeys.push(':commit')
-  if (!_.isEmpty(ticket)) patternKeys.push(':ticket')
-  if (emoji) patternKeys.push(':emoji')
+  if (!_.isEmpty(type)) patternKeys.push(commitKeys.type)
+  if (!_.isEmpty(commit)) patternKeys.push(commitKeys.commit)
+  if (!_.isEmpty(ticket)) patternKeys.push(commitKeys.ticket)
+  if (emoji) patternKeys.push(commitKeys.emoji)
 
   const containKeys = patternKeys.every(key => pattern.includes(key))
 
@@ -138,10 +138,10 @@ export const transform = async ({
   pattern: string
 }): Promise<string> => {
   const patternKeys = {
-    ':type': type,
-    ':ticket': ticket ?? '',
-    ':commit': commit,
-    ':emoji': emoji ? emojiByType[type] : '',
+    [commitKeys.type]: type,
+    [commitKeys.ticket]: ticket ?? '',
+    [commitKeys.commit]: commit,
+    [commitKeys.emoji]: emoji ? emojiByType[type] : '',
   }
   const message = replace({ pattern, values: patternKeys }) as string
 
