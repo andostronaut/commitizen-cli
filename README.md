@@ -12,6 +12,14 @@
 
 Command-line interface tool that helps enforce standardized commit message formats in Git repositories.
 
+<p align="center">
+  <img 
+    src="./assets/demo.png"
+    alt="Commitizen CLI Demo"
+    style="width:100%;"
+  />
+</p>
+
 ## Features
 
 - **Standardized Commit Messages**: Enforce consistent commit message structure by guiding users through prompts and validating against specified formats.
