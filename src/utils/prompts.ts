@@ -13,6 +13,7 @@ export const type = () =>
       { label: 'Design', value: 'design' },
       { label: 'Experiment', value: 'experiment' },
       { label: 'Documentation', value: 'documentation' },
+      { label: 'Refactor', value: 'refactor' },
     ],
   }) as Promise<string>
 

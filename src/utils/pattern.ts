@@ -15,6 +15,7 @@ const emojiByType: Record<string, any> = {
   design: '🎨',
   experiment: '🧪',
   documentation: '📝',
+  refactor: '🌱',
 }
 
 export const pattern = async ({
