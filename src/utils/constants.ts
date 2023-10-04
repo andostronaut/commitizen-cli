@@ -10,5 +10,4 @@ export const commitKeys = Object.freeze({
   type: '<type>',
   ticket: '<ticket>',
   commit: '<commit>',
-  emoji: '<emoji>',
 })
