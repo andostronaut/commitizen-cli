@@ -105,9 +105,7 @@ export const commiter = async () => {
   `)
   } catch (err: any) {
     log({ type: 'error', msg: err.message })
-
     handleCliError(err)
-
     process.exit(1)
   }
 }

@@ -18,9 +18,7 @@ cli(
   () => {
     commiter().catch((err: any) => {
       log({ type: 'error', msg: err.message })
-
       handleCliError(err)
-
       process.exit(1)
     })
   }
