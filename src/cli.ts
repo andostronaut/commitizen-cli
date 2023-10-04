@@ -14,9 +14,15 @@ cli(
     name: PACKAGE_NAME,
     version: VERSION,
     commands: [update, config, clean],
+    flags: {
+      minified: {
+        type: Boolean,
+        description: 'Use the minified commit structure',
+      },
+    },
   },
-  () => {
-    commiter().catch((err: any) => {
+  ({ flags }) => {
+    commiter({ flags }).catch((err: any) => {
       log({ type: 'error', msg: err.message })
       handleCliError(err)
       process.exit(1)

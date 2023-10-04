@@ -4,7 +4,7 @@ import { bgYellow, black } from 'kolorist'
 import dedent from 'dedent'
 
 import { CANCELED_OP_MSG } from './constants'
-import { type, commit, ticket, emoji } from './prompts'
+import { type, commit, ticket } from './prompts'
 import { handleCliError, CliError } from './cli-errror'
 import { log } from './log'
 import {
@@ -16,7 +16,7 @@ import {
 } from './git'
 import { pattern, transform } from './pattern'
 
-export const commiter = async () => {
+export const commiter = async ({ flags }: { flags: TArgv }) => {
   p.intro(bgYellow(black('Commitizen CLI')))
 
   isGitRepository()
@@ -27,8 +27,7 @@ export const commiter = async () => {
     {
       type: () => type(),
       commit: () => commit(),
-      ticket: () => ticket(),
-      emoji: () => emoji(),
+      ticket: () => ticket({ flags }),
     },
     {
       onCancel: () => {
@@ -39,22 +38,26 @@ export const commiter = async () => {
   )
 
   try {
-    const blueprint: any = await pattern({
-      type: values.type,
-      commit: values.commit,
-      ticket: values.ticket,
-      emoji: values.emoji,
-    })
+    let commit: string
 
-    if (_.isEmpty(blueprint)) return
+    if (flags.minified) {
+      commit = `${values.type}: ${values.commit}`
+    } else {
+      const blueprint: any = await pattern({
+        type: values.type,
+        commit: values.commit,
+        ticket: values.ticket,
+      })
 
-    const commit: string = await transform({
-      type: values.type,
-      commit: values.commit,
-      ticket: values.ticket,
-      emoji: values.emoji,
-      pattern: blueprint,
-    })
+      if (_.isEmpty(blueprint)) return
+
+      commit = await transform({
+        type: values.type,
+        commit: values.commit,
+        ticket: values.ticket,
+        pattern: blueprint,
+      })
+    }
 
     const { stdoutStatus, stderrStatus } = await gitStatus()
 

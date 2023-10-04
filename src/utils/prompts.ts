@@ -72,7 +72,9 @@ export const commit = () =>
     },
   }) as Promise<string>
 
-export const ticket = async () => {
+export const ticket = async ({ flags }: { flags: TArgv }) => {
+  if (flags.minified) return
+
   const hasTicket = await p.confirm({
     message: 'Has ticket ?',
     initialValue: false,
@@ -88,8 +90,11 @@ export const ticket = async () => {
   })
 }
 
-export const emoji = () =>
+export const emoji = ({ flags }: { flags: TArgv }) => {
+  if (flags.minified) return false
+
   p.confirm({
     message: 'Use emoji on commit type ?',
     initialValue: false,
   }) as Promise<boolean>
+}

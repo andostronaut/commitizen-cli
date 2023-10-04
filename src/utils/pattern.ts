@@ -6,28 +6,14 @@ import { getConfig, setConfigs } from './config'
 
 type PatternValues = { [key: string]: string }
 
-const emojiByType: Record<string, any> = {
-  feature: '✨',
-  bugfix: '🐛',
-  hotfix: '🚑',
-  chore: '🛠️',
-  epic: '📌',
-  design: '🎨',
-  experiment: '🧪',
-  documentation: '📝',
-  refactor: '🌱',
-}
-
 export const pattern = async ({
   type,
   commit,
   ticket,
-  emoji,
 }: {
   type: string
   commit: string
   ticket: string | any
-  emoji: boolean
 }) => {
   let defaultPattern: string
 
@@ -35,8 +21,8 @@ export const pattern = async ({
 
   if (_.isEmpty(configPattern)) {
     ticket
-      ? (defaultPattern = `${commitKeys.emoji} ${commitKeys.type}(${commitKeys.ticket}): ${commitKeys.commit}`)
-      : (defaultPattern = `${commitKeys.emoji} ${commitKeys.type}: ${commitKeys.commit}`)
+      ? (defaultPattern = `${commitKeys.type}(${commitKeys.ticket}): ${commitKeys.commit}`)
+      : (defaultPattern = `${commitKeys.type}: ${commitKeys.commit}`)
   } else {
     defaultPattern = configPattern
   }
@@ -60,7 +46,7 @@ export const pattern = async ({
     validate: value => {
       if (_.isEmpty(value)) return 'Specific pattern required'
 
-      if (!hasPatternKeys({ type, commit, ticket, emoji, pattern: value }))
+      if (!hasPatternKeys({ type, commit, ticket, pattern: value }))
         return `Pattern key not invalid (ex: ${commitKeys.type}, ${commitKeys.ticket}, ${commitKeys.commit})`
     },
   })
@@ -87,13 +73,11 @@ export const hasPatternKeys = ({
   type,
   commit,
   ticket,
-  emoji,
   pattern,
 }: {
   type: string
   commit: string
   ticket: string | any
-  emoji: boolean
   pattern: string
 }): boolean => {
   const patternKeys: Array<string> = []
@@ -101,7 +85,6 @@ export const hasPatternKeys = ({
   if (!_.isEmpty(type)) patternKeys.push(commitKeys.type)
   if (!_.isEmpty(commit)) patternKeys.push(commitKeys.commit)
   if (!_.isEmpty(ticket)) patternKeys.push(commitKeys.ticket)
-  if (emoji) patternKeys.push(commitKeys.emoji)
 
   const containKeys = patternKeys.every(key => pattern.includes(key))
 
@@ -129,20 +112,17 @@ export const transform = async ({
   type,
   commit,
   ticket,
-  emoji,
   pattern,
 }: {
   type: string
   commit: string
   ticket: string | any
-  emoji: boolean
   pattern: string
 }): Promise<string> => {
   const patternKeys = {
     [commitKeys.type]: type,
     [commitKeys.ticket]: ticket ?? '',
     [commitKeys.commit]: commit,
-    [commitKeys.emoji]: emoji ? emojiByType[type] : '',
   }
   const message = replace({ pattern, values: patternKeys }) as string
 
