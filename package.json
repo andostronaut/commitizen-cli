@@ -5,11 +5,11 @@
   "type": "module",
   "license": "MIT",
   "bin": {
-    "commitizen-cli": "./dist/cli.mjs",
-    "cocli": "./dist/cli.mjs"
+    "commitizen-cli": "./dist/cli.mjs"
   },
   "author": {
-    "name": "iamando",
+    "name": "Ando",
+    "url": "https://github.com/iamando",
     "email": "iamando@tuta.io"
   },
   "repository": {
