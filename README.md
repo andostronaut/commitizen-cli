@@ -10,6 +10,8 @@
 ![license](https://img.shields.io/github/license/iamando/commitizen-cli?color=success)
 ![npm](https://img.shields.io/npm/v/commitizen-cli)
 
+![Demo](./demo.gif)
+
 Command-line interface tool that helps enforce standardized commit message formats in Git repositories.
 
 ## Features
