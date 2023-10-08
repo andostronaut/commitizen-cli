@@ -1,6 +1,6 @@
 {
   "name": "commitizen-cli",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Command-line interface tool that helps enforce standardized commit message formats in Git repositories.",
   "type": "module",
   "license": "MIT",
