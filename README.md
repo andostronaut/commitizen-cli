@@ -1,6 +1,6 @@
 <p align="center">
   <img 
-    src="./assets/logo-banner.png"
+    src="./logo-banner.png"
     alt="Commitizen CLI"
     style="width:100%;"
   />
@@ -11,14 +11,6 @@
 ![npm](https://img.shields.io/npm/v/commitizen-cli)
 
 Command-line interface tool that helps enforce standardized commit message formats in Git repositories.
-
-<p align="center">
-  <img 
-    src="./assets/demo.png"
-    alt="Commitizen CLI Demo"
-    style="width:100%;"
-  />
-</p>
 
 ## Features
 
@@ -53,12 +45,6 @@ Run the following command:
 
 ```shell
 commitizen-cli
-```
-
-or use the minified command:
-
-```shell
-cocli
 ```
 
 ## Updating from a Previous Version
@@ -156,28 +142,12 @@ commitizen-cli config get PATTERN
 commitizen-cli config set PATTERN='specific pattern'
 ```
 
-or using the minified command:
-
-```shell
-cocli config get PATTERN
-```
-
-```shell
-cocli config set PATTERN='specific pattern'
-```
-
 ### Update
 
 To update to the latest version, use:
 
 ```shell
 commitizen-cli update
-```
-
-or using the minified command:
-
-```shell
-cocli update
 ```
 
 Follow the prompts to generate a standardized commit message.
